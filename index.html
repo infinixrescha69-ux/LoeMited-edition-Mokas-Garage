@@ -375,11 +375,7 @@ $('exportExcel').onclick=()=>{
  <tr><td class="label">Biaya Penghubung</td><td class="amount">${list.length*100000}</td><td class="label">Gaji Karyawan</td><td class="amount">1500000</td></tr>
  <tr><td class="label">LABA BERSIH</td><td class="amount" colspan="3">${list.reduce((a,x)=>a+(Number(x.profit)||0),0)-list.length*100000-1500000}</td></tr></table>
  <h2>DETAIL TRANSAKSI</h2><table><thead><tr><th>No</th><th>Tanggal</th><th>Kendaraan</th><th>Harga Jual (Rp)</th><th>Modal (Rp)</th><th>Laba (Rp)</th><th>Pembeli</th></tr></thead><tbody>${detail||'<tr><td colspan="7">Tidak ada transaksi pada periode ini</td></tr>'}</tbody></table>
- <p><i>Dokumen dibuat otomatis oleh LoeMited edition Mokas Garage.</i></p><script>
-if ("serviceWorker" in navigator) {
-  window.addEventListener("load", () => navigator.serviceWorker.register("./sw.js").catch(console.error));
-}
-</script>
+ <p><i>Dokumen dibuat otomatis oleh LoeMited edition Mokas Garage.</i></p>
 </body></html>`;
  let blob=new Blob([wb],{type:'application/vnd.ms-excel;charset=utf-8'}),a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='Laporan_Motor_'+today()+'.xls';a.click();setTimeout(()=>URL.revokeObjectURL(a.href),1000)
 };

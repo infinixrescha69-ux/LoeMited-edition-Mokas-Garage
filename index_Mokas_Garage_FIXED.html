@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html lang="id"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#101828">
+<link rel="manifest" href="./manifest.json">
+<link rel="icon" type="image/png" sizes="192x192" href="./icon-192.png">
+<title>LoeMited edition Mokas Garage — Showroom</title>
+<style>
+:root{--bg:#f3f5f8;--card:#fff;--ink:#182230;--muted:#6b7787;--line:#e2e7ee;--blue:#175cd3;--nav:#101828;--green:#039855;--red:#d92d20;--orange:#dc6803}
+*{box-sizing:border-box}body{margin:0;font:14px/1.45 system-ui,-apple-system,Segoe UI,Roboto,sans-serif;background:var(--bg);color:var(--ink)}
+header{background:linear-gradient(120deg,#101828,#243b53);color:#fff;padding:20px 22px;display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
+header h1{font-size:22px;margin:0}header p{margin:4px 0 0;color:#cbd5e1}
+.wrap{max-width:1200px;margin:auto;padding:18px}
+nav{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px}
+nav button{border:0;border-radius:10px;padding:10px 14px;background:#e5eaf1;color:#334155;font-weight:700;cursor:pointer}
+nav button.active{background:var(--blue);color:#fff}
+.page{display:none}.page.active{display:block}
+.grid{display:grid;grid-template-columns:repeat(12,1fr);gap:14px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px;box-shadow:0 2px 5px #10182808}
+.span12{grid-column:span 12}.span8{grid-column:span 8}.span6{grid-column:span 6}.span4{grid-column:span 4}
+h2{font-size:17px;margin:0 0 13px}h3{font-size:14px;margin:0 0 10px;color:#344054}
+label{display:block;font-weight:650;font-size:12px;color:#475467;margin:0 0 5px}
+input,select,textarea{width:100%;border:1px solid #cfd8e3;border-radius:8px;padding:10px;background:#fff;color:#101828;font:inherit;outline:none}
+input:focus,select:focus{border-color:#84adff;box-shadow:0 0 0 3px #175cd315}
+.field{margin-bottom:11px}.row{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
+.btn{border:0;border-radius:9px;padding:10px 13px;font-weight:700;cursor:pointer;background:var(--blue);color:#fff}
+.btn.secondary{background:#e9eef5;color:#344054}.btn.green{background:var(--green)}.btn.red{background:#fee4e2;color:#b42318}.btn.orange{background:#fef0c7;color:#93370d}
+.actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
+.kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:14px}
+.kpi{background:#fff;border:1px solid var(--line);border-radius:12px;padding:14px}.kpi small{display:block;color:var(--muted);font-weight:600}.kpi strong{font-size:21px;display:block;margin-top:5px}
+.metric{padding:11px;border-radius:9px;background:#f8fafc;margin:8px 0}.metric b{float:right}
+table{width:100%;border-collapse:collapse;font-size:12px;min-width:650px}th,td{padding:10px 8px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}th{background:#f8fafc;color:#475467;position:sticky;top:0}
+.tablewrap{overflow:auto;border:1px solid var(--line);border-radius:10px}
+.badge{display:inline-block;padding:3px 8px;border-radius:999px;font-size:11px;font-weight:700;background:#eff8ff;color:#175cd3}.badge.green{background:#ecfdf3;color:#027a48}.badge.orange{background:#fffaeb;color:#b54708}.badge.red{background:#fef3f2;color:#b42318}
+.note{color:var(--muted);font-size:12px}.empty{text-align:center;color:var(--muted);padding:25px}
+@media(max-width:760px){.span8,.span6,.span4{grid-column:span 12}.kpis{grid-template-columns:repeat(2,1fr)}header h1{font-size:19px}.wrap{padding:12px}.row{grid-template-columns:1fr}}
+</style><style>
+/* V38 MENU GRID PREMIUM */
+#nav{display:grid!important;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;padding:12px;margin:0 0 16px;background:transparent;border:0}
+#nav button{min-height:82px;display:flex!important;flex-direction:column;align-items:center;justify-content:center;gap:8px;text-align:center;white-space:normal;padding:10px 6px;border:1px solid #343943;border-radius:14px;background:linear-gradient(145deg,#20242b,#15181d);color:#e8edf4;font-weight:600;font-size:12px;box-shadow:0 3px 9px #0002}
+#nav button .menuIcon{font-size:23px;line-height:1}
+#nav button.active{border:1px solid #d99b27;background:linear-gradient(145deg,#3a2b12,#202018);color:#ffc857;box-shadow:0 0 0 1px #d99b2730}
+#nav button:active{transform:scale(.98)}
+@media(max-width:420px){#nav{gap:7px;padding:8px}#nav button{min-height:72px;font-size:11px;border-radius:11px}}
+</style></head><body>
+<header><div><h1>🏍 LoeMited edition Mokas Garage</h1><p>Manajemen showroom motor bekas • Offline • Data tersimpan di perangkat</p></div><span class="badge green">SHOWROOM EDITION</span></header>
+<div class="wrap">
+<nav id="nav">
+<button data-page="stokMobil"><span class="menuIcon">🚘</span><span>Stok Mobil</span></button>
+<button class="active" data-page="dashboard"><span class="menuIcon">▦</span><span>Dashboard</span></button>
+<button data-page="stok"><span class="menuIcon">🏍️</span><span>Stok Motor</span></button>
+<button data-page="pembelianMobil"><span class="menuIcon">🚘</span><span>Pembelian Mobil</span></button>
+<button data-page="laporan"><span class="menuIcon">📊</span><span>Laporan</span></button>
+<button data-page="beli"><span class="menuIcon">🏍️</span><span>Pembelian Motor</span></button>
+<button data-page="jualMobil"><span class="menuIcon">🚘</span><span>Penjualan Mobil</span></button>
+<button data-page="data"><span class="menuIcon">💾</span><span>Data &amp; Backup</span></button>
+<button data-page="jual"><span class="menuIcon">🏍️</span><span>Penjualan Motor</span></button>
+</nav>
+<section class="page active" id="dashboard">
+<div class="kpis">
+<div class="kpi"><small>Total kendaraan tersedia</small><strong id="kStok">0 unit</strong></div>
+<div class="kpi"><small>Total modal stok</small><strong id="kModal">Rp0</strong></div>
+<div class="kpi"><small>Total kendaraan terjual</small><strong id="kSold">0 unit</strong></div>
+<div class="kpi"><small>Total laba terealisasi</small><strong id="kProfit">Rp0</strong></div>
+</div>
+<div class="grid">
+<div class="card span8"><h2>Ringkasan Stok Motor & Mobil</h2>
+<div class="metric"><b>Motor</b> — tersedia <strong id="dashMotorStock">0 unit</strong> • terjual <strong id="dashMotorSold">0 unit</strong></div>
+<div class="metric"><b>Mobil</b> — tersedia <strong id="dashCarStock">0 unit</strong> • terjual <strong id="dashCarSold">0 unit</strong></div>
+<div id="dashStock"></div>
+</div>
+<div class="card span4"><h2>Ringkasan Operasional Gabungan</h2>
+<div class="metric">Pembelian motor <b id="dBuy">Rp0</b></div>
+<div class="metric">Pembelian mobil <b id="dCarBuy">Rp0</b></div>
+<div class="metric">Penjualan motor bulan ini <b id="dSale">Rp0</b></div>
+<div class="metric">Penjualan mobil bulan ini <b id="dCarSale">Rp0</b></div>
+<div class="metric">Biaya motor bulan ini <b id="dCost">Rp0</b></div>
+<div class="metric">Omzet gabungan bulan ini <b id="dTotalSale">Rp0</b></div>
+<p class="note">Dashboard menggabungkan ringkasan motor dan mobil. Data transaksi serta riwayat masing-masing tetap terpisah.</p>
+</div></div></section>
+<section class="page" id="stok"><div class="card"><h2>Daftar Stok Motor</h2><div class="row"><div class="field"><label>Cari motor / nomor rangka / plat</label><input id="stockSearch" placeholder="Contoh: Beat, B 1234..."></div><div class="field"><label>Filter status</label><select id="stockFilter"><option value="">Semua status</option><option>Stok</option><option>Terjual</option></select></div></div><div class="tablewrap"><table><thead><tr><th>Kendaraan</th><th>Identitas</th><th>Tahun</th><th>Modal total</th><th>Harga jual</th><th>Status</th><th>Aksi</th></tr></thead><tbody id="stockTable"></tbody></table></div></div></section>
+<section class="page" id="beli"><div class="grid"><div class="card span6"><h2>Catat Pembelian / Motor Masuk</h2><form id="buyForm"><div class="row"><div class="field"><label>Merk *</label><select id="bBrand" required><option value="">Pilih merk</option><option>Honda</option><option>Yamaha</option><option>Suzuki</option><option>Kawasaki</option><option>TVS</option><option>Lainnya</option></select></div><div class="field"><label>Tipe / model *</label><select id="bModel" required><option value="">Pilih merk dahulu</option></select></div></div><div class="field"><label>Nama motor *</label><select id="bName" required><option value="">Pilih tipe / model dahulu</option></select></div><div class="row"><div class="field"><label>Tahun (minimal 2010)</label><select id="bYear"><option value="">Pilih tahun</option><option>2010</option><option>2011</option><option>2012</option><option>2013</option><option>2014</option><option>2015</option><option>2016</option><option>2017</option><option>2018</option><option>2019</option><option>2020</option><option>2021</option><option>2022</option><option>2023</option><option>2024</option><option>2025</option><option>2026</option></select></div><div class="field"><label>Warna</label><input id="bColor"></div></div><div class="row"><div class="field"><label>Nomor polisi</label><input id="bPlate"></div><div class="field"><label>Nomor rangka (opsional)</label><input id="bFrame"></div></div><div class="row"><div class="field"><label>KM odometer</label><input id="bKm" type="number"></div><div class="field"><label>Nama penjual / sumber</label><input id="bSeller"></div></div><div class="field"><label>Tanggal pembelian</label><input id="bDate" type="date" required></div><div class="field"><label>Harga beli (Rp) *</label><input id="bPrice" type="text" inputmode="numeric" autocomplete="off" min="0" required></div><div class="field"><label>Catatan kondisi awal</label><textarea id="bNote" rows="2"></textarea></div></form></div>
+<div class="card span6"><h2>Estimasi Harga & Margin</h2><p class="note">Gunakan harga pasar realistis, bukan hanya harga iklan tertinggi.</p><div class="field"><label>Harga jual rencana (Rp)</label><input id="bSalePlan" type="text" inputmode="numeric" autocomplete="off" value="0"></div><div class="field"><label>Perkiraan biaya servis (Rp)</label><input id="bEstService" type="text" inputmode="numeric" autocomplete="off" value="0"></div>
+<div class="field"><label>Perkiraan biaya pajak (Rp)</label><input id="bEstTax" type="text" inputmode="numeric" autocomplete="off" value="0"></div>
+<div class="field"><label>Total perkiraan biaya awal (servis + pajak)</label><input id="bInitialCost" type="text" inputmode="numeric" autocomplete="off" value="0" readonly></div><div class="field"><label>Target laba (Rp)</label><input id="bTarget" type="text" inputmode="numeric" autocomplete="off" value="1000000"></div><div class="metric">Modal perkiraan <b id="bEstCapital">Rp0</b></div><div class="metric">Harga beli maksimal <b id="bMaxBuy">Rp0</b></div><div class="metric">Margin rencana <b id="bMargin">Rp0</b></div><button class="btn secondary" type="button" id="applyBuyCalc">Gunakan harga beli maksimal</button><div style="margin-top:12px"><button class="btn" type="submit" form="buyForm">Simpan Motor Masuk</button></div></div></div></div></section>
+
+<section class="page" id="jual"><div class="grid"><div class="card span6"><h2>Catat Penjualan Motor</h2><p class="note">Sumber motor otomatis dari <b>Stok Motor</b> yang belum terjual. Harga beli dan seluruh biaya Pajak & Servis dihitung sebagai modal.</p><form id="saleForm"><div class="field"><label>Pilih motor tersedia *</label><select id="sMotor" required></select></div><div class="field"><label>Tanggal penjualan *</label><input id="sDate" type="date" required></div><div class="field"><label>Harga jual (Rp) *</label><input id="sPrice" type="text" inputmode="numeric" autocomplete="off" min="0" required></div><div class="field"><label>Nama pembeli</label><input id="sBuyer"></div><div class="field"><label>Nomor kontak pembeli (opsional)</label><input id="sContact"></div><div class="field"><label>Metode pembayaran</label><select id="sPayment"><option>Tunai</option><option>Transfer</option><option>Leasing / kredit</option><option>Campuran</option></select></div><div class="field"><label>Catatan transaksi</label><textarea id="sNote" rows="2"></textarea></div><button class="btn green" type="submit">Simpan Penjualan</button></form></div><div class="card span6"><h2>Simulasi Laba Penjualan</h2><div class="metric">Modal motor + biaya tercatat <b id="sCapital">Rp0</b></div><div class="metric">Harga jual simulasi <b id="sSimPrice">Rp0</b></div><div class="metric">Estimasi laba bersih <b id="sSimProfit">Rp0</b></div><p class="note">Harga jual otomatis terisi dari modal motor + target laba. Harga tetap dapat diedit sesuai kesepakatan.</p></div>
+</div></div></section>
+
+
+<section class="page" id="jualMobil"><div class="grid">
+<div class="card span6">
+<h2>Catat Penjualan Mobil</h2>
+<p class="note">Sumber mobil otomatis dari <b>Stok Mobil</b> yang belum terjual. Harga beli dan seluruh biaya tercatat dihitung sebagai modal.</p>
+<form id="carSaleForm">
+<div class="field"><label>Pilih mobil tersedia *</label><select id="csCar" required></select></div>
+<div class="field"><label>Tanggal penjualan *</label><input id="csDate" type="date" required></div>
+<div class="field"><label>Harga jual (Rp) *</label><input id="csPrice" type="text" inputmode="numeric" autocomplete="off" min="0" required></div>
+<div class="field"><label>Nama pembeli</label><input id="csBuyer"></div>
+<div class="field"><label>Nomor kontak pembeli (opsional)</label><input id="csContact"></div>
+<div class="field"><label>Metode pembayaran</label><select id="csPayment"><option>Tunai</option><option>Transfer</option><option>Leasing / kredit</option><option>Campuran</option></select></div>
+<div class="field"><label>Catatan transaksi</label><textarea id="csNote" rows="2"></textarea></div>
+<button class="btn green" type="submit">Simpan Penjualan</button>
+</form>
+</div>
+<div class="card span6">
+<h2>Simulasi Laba Penjualan</h2>
+<div class="metric">Modal mobil + biaya tercatat <b id="csCapital">Rp0</b></div>
+<div class="metric">Harga jual simulasi <b id="csSimPrice">Rp0</b></div>
+<div class="metric">Estimasi laba bersih <b id="csProfit">Rp0</b></div>
+<p class="note">Harga jual otomatis terisi dari modal mobil + target laba. Harga tetap dapat diedit sesuai kesepakatan.</p>
+</div>
+</section>
+
+
+<section class="page" id="nego" style="display:none!important"><div class="grid">
+<div class="card span6"><h2>Negosiasi Pembelian Motor</h2><form id="negoBuyForm">
+<div class="row"><div class="field"><label>Merk *</label><select id="nbBrand" required><option value="">Pilih merk</option><option>Honda</option><option>Yamaha</option><option>Suzuki</option><option>Kawasaki</option><option>TVS</option><option>Lainnya</option></select></div><div class="field"><label>Tipe / model *</label><select id="nbModel" required><option value="">Pilih merk dahulu</option></select></div></div><div class="field"><label>Nama motor *</label><select id="nbName" required><option value="">Pilih tipe / model dahulu</option></select></div>
+<div class="row"><div class="field"><label>Tahun (minimal 2010)</label><select id="nbYear"><option value="">Pilih tahun</option><option>2010</option><option>2011</option><option>2012</option><option>2013</option><option>2014</option><option>2015</option><option>2016</option><option>2017</option><option>2018</option><option>2019</option><option>2020</option><option>2021</option><option>2022</option><option>2023</option><option>2024</option><option>2025</option><option>2026</option></select></div><div class="field"><label>Penjual / sumber</label><input id="nbSeller"></div></div>
+<div class="field"><label>Nomor kontak</label><input id="nbContact"></div>
+<div class="row"><div class="field"><label>Harga penawaran penjual (Rp)</label><input id="nbAsk" class="money" inputmode="numeric"></div><div class="field"><label>Tawaran showroom (Rp)</label><input id="nbOffer" class="money" inputmode="numeric"></div></div><div class="field"><label>HARGA DEAL / KESEPAKATAN FINAL (Rp) *</label><input id="nbDealPrice" class="money" inputmode="numeric" placeholder="Isi hanya jika sudah sepakat"></div>
+<div class="row"><div class="field"><label>Estimasi biaya awal (Rp)</label><input id="nbCost" class="money" inputmode="numeric" value="0"></div><div class="field"><label>Target laba (Rp)</label><input id="nbTarget" class="money" inputmode="numeric" value="1000000"></div></div>
+<div class="metric">Harga beli maksimal <b id="nbMax">Rp0</b></div><div class="metric">Estimasi harga jual realistis <b id="nbRealisticSale">Rp0</b><small id="nbRealisticBasis" style="display:block;margin-top:5px;color:#64748b">Berdasarkan estimasi harga beli + biaya awal + target laba.</small></div><div class="field"><label>Status</label><select id="nbStatus"><option>Menunggu</option><option>Negosiasi</option><option>Deal</option><option>Batal</option></select></div>
+<div class="field"><label>Catatan negosiasi</label><textarea id="nbNote" rows="2"></textarea></div><button class="btn" type="submit">Simpan Negosiasi Pembelian</button></form></div>
+<div class="card span6"><h2>Negosiasi Penjualan Motor</h2><form id="nsForm">
+<div class="field"><label>Pilih motor stok *</label><select id="nsMotor" required></select></div><div class="metric" id="nsMotorSource">Pilih motor untuk melihat data stok, harga beli, biaya, dan modal otomatis.</div>
+<div class="row"><div class="field"><label>Harga awal showroom (Rp)</label><input id="nsAsk" class="money" inputmode="numeric"></div><div class="field"><label>Tawaran pembeli (Rp)</label><input id="nsOffer" class="money" inputmode="numeric"></div></div>
+<div class="field"><label>Counter offer showroom (Rp)</label><input id="nsCounter" class="money" inputmode="numeric"></div><div class="field"><label>HARGA DEAL / KESEPAKATAN FINAL (Rp) *</label><input id="nsDealPrice" class="money" inputmode="numeric" placeholder="Isi hanya jika sudah sepakat"></div>
+<div class="row"><div class="field"><label>Nama pembeli</label><input id="nsBuyer"></div><div class="field"><label>Kontak pembeli</label><input id="nsContact"></div></div>
+<div class="field"><label>Status</label><select id="nsStatus"><option>Prospek</option><option>Negosiasi</option><option>Deal</option><option>Batal</option></select></div>
+<div class="field"><label>Catatan negosiasi</label><textarea id="nsNote" rows="2"></textarea></div>
+<div class="field"><label>Target laba showroom (Rp)</label><input id="nsTargetProfit" class="money" inputmode="numeric" value="1,000,000"><small class="note">Nilai awal mengikuti target laba motor dari stok; bisa disesuaikan untuk negosiasi ini.</small></div><div class="metric">Modal motor + seluruh biaya tercatat <b id="nsCapital">Rp0</b></div><div class="metric">HARGA JUAL REALISTIS (otomatis) <b id="nsRealistic">Rp0</b></div><div class="metric">Estimasi laba pada harga negosiasi <b id="nsProfit">Rp0</b></div><p class="note">Harga realistis = modal motor + biaya tercatat + target laba showroom. Harga ini menjadi acuan, bukan harga Deal final.</p>
+<button class="btn green" type="submit">Simpan Negosiasi Penjualan</button></form></div>
+<div class="card span12"><h2>Riwayat Negosiasi</h2><div class="tablewrap"><table><thead><tr><th>Tanggal</th><th>Jenis</th><th>Motor / calon pelanggan</th><th>Harga / tawaran</th><th>Status</th><th>Catatan</th><th>Aksi</th></tr></thead><tbody id="negoTable"></tbody></table></div><p class="note">Negosiasi pembelian DEAL memasukkan motor ke stok. Negosiasi penjualan DEAL mencatat penjualan dan mengubah status motor menjadi Terjual.</p></div>
+</div></section>
+<section class="page" id="laporan"><div class="card"><h2>Laporan Penjualan & Laba</h2><div class="row"><div class="field"><label>Dari tanggal</label><input id="rFrom" type="date"></div><div class="field"><label>Sampai tanggal</label><input id="rTo" type="date"></div></div><div class="actions"><button class="btn" id="runReport">Tampilkan Laporan</button><button class="btn secondary" id="exportReport">Export CSV</button>
+<button class="btn secondary" id="exportExcel">Export Excel (.xls)</button>
+<button class="btn secondary" id="exportPDF">Export PDF / Cetak</button></div><div class="kpis" style="margin-top:14px"><div class="kpi"><small>Jumlah terjual</small><strong id="rCount">0</strong></div><div class="kpi"><small>Omzet</small><strong id="rOmzet">Rp0</strong></div><div class="kpi"><small>Total modal terjual</small><strong id="rCapital">Rp0</strong></div><div class="kpi"><small>Laba kotor</small><strong id="rProfit">Rp0</strong></div>
+<div class="kpi"><small>Biaya Penghubung (terjual × Rp100,000)</small><strong id="rPenghubung">Rp0</strong></div>
+<div class="kpi"><small>Gaji karyawan</small><strong id="rSalary">Rp1,500,000</strong></div>
+<div class="kpi"><small>Laba bersih (Laba − Penghubung − Gaji)</small><strong id="rNetProfit">Rp0</strong></div></div><div class="tablewrap"><table><thead><tr><th>Tanggal</th><th>Kendaraan</th><th>Harga jual</th><th>Modal</th><th>Laba</th><th>Pembeli</th></tr></thead><tbody id="reportTable"></tbody></table></div></div></section>
+<section class="page" id="data"><div class="grid"><div class="card span6"><h2>Backup & Pemulihan Data</h2><p>Data disimpan lokal di browser/perangkat ini. Backup berkala untuk menghindari kehilangan data.</p><div class="actions"><button class="btn" id="backup">Download Backup JSON</button><label class="btn secondary" style="cursor:pointer">Import Backup JSON<input id="restore" type="file" accept=".json,application/json" style="display:none"></label></div></div><div class="card span6"><h2>Pengaturan Data</h2><p class="note">Menghapus seluruh data tidak bisa dibatalkan. Pastikan backup sudah dibuat.</p><button class="btn red" id="clearAll">Hapus Semua Data</button><div class="metric">Versi aplikasi <b>LoeMited edition Mokas Garage</b></div><p class="note">Aplikasi offline single-device. Untuk pemakaian banyak staf/perangkat diperlukan database dan sinkronisasi server.</p></div></div></section>
+</div>
+
+<section class="page" id="stokMobil">
+<div class="grid"><div class="card span12">
+<h2>Stok Mobil</h2><p class="note">Isi atau ubah Rencana jual langsung pada kolom Rencana jual, lalu tekan Simpan rencana. Nilai ini menjadi harga otomatis pada Penjualan Mobil.</p>
+<div class="row"><div class="field"><label>Cari mobil / plat / rangka</label><input id="carStockSearch" placeholder="Ketik merk, model, atau nomor polisi"></div><div class="field"><label>Filter status</label><select id="carStockFilter"><option value="">Semua</option><option value="Stok">Stok</option><option value="Terjual">Terjual</option></select></div></div>
+<div class="kpis"><div class="kpi"><small>Mobil tersedia</small><strong id="carStockCount">0 unit</strong></div><div class="kpi"><small>Modal stok mobil</small><strong id="carStockCapital">Rp0</strong></div></div>
+<div class="tablewrap"><table><thead><tr><th>Mobil</th><th>Identitas</th><th>Tahun</th><th>KM</th><th>Modal</th><th>Rencana jual</th><th>Status</th><th>Aksi</th></tr></thead><tbody id="carStockTable"></tbody></table></div>
+</div></div></section>
+
+<section class="page" id="pembelianMobil">
+  <div class="grid">
+    <div class="card span6">
+    <h2>Catat Pembelian Mobil Masuk</h2>
+    <form id="carBuyForm">
+<div class="row"><div class="field"><label>Merk mobil *</label><select id="cbBrand" required><option value="">Pilih merk</option></select></div><div class="field"><label>Tipe / model *</label><select id="cbModel" required disabled><option value="">Pilih merk dahulu</option></select></div></div>
+<div class="field"><label>Nama mobil *</label><input id="cbName" placeholder="Nama/model mobil" required></div>
+<div class="field"><label>Tahun (minimal 2000)</label><select id="cbYear"><option value="">Pilih tahun</option><option value="2000">2000</option><option value="2001">2001</option><option value="2002">2002</option><option value="2003">2003</option><option value="2004">2004</option><option value="2005">2005</option><option value="2006">2006</option><option value="2007">2007</option><option value="2008">2008</option><option value="2009">2009</option><option value="2010">2010</option><option value="2011">2011</option><option value="2012">2012</option><option value="2013">2013</option><option value="2014">2014</option><option value="2015">2015</option><option value="2016">2016</option><option value="2017">2017</option><option value="2018">2018</option><option value="2019">2019</option><option value="2020">2020</option><option value="2021">2021</option><option value="2022">2022</option><option value="2023">2023</option><option value="2024">2024</option><option value="2025">2025</option><option value="2026">2026</option></select></div>
+<div class="row"><div class="field"><label>Transmisi</label><select id="cbTransmission"><option value="">Pilih transmisi</option><option>Manual</option><option>Automatic</option></select></div><div class="field"><label>Warna</label><select id="cbColor"><option value="">-- Pilih warna --</option><option>Hitam</option><option>Putih</option><option>Silver</option><option>Abu-abu</option><option>Merah</option><option>Biru</option><option>Hijau</option><option>Cokelat</option><option>Kuning</option><option>Oranye</option><option>Ungu</option><option>Lainnya</option></select></div></div>
+<div class="row"><div class="field"><label>Nomor polisi</label><input id="cbPlate"></div><div class="field"><label>Nomor rangka (opsional)</label><input id="cbFrame"></div></div>
+<div class="row"><div class="field"><label>KM odometer</label><input id="cbKm" type="number" min="0"></div><div class="field"><label>Nama penjual / sumber</label><input id="cbSeller"></div></div>
+<div class="field"><label>Tanggal pembelian</label><input id="cbDate" type="date" required></div>
+<div class="field"><label>Harga beli (Rp) *</label><input id="cbPrice" type="text" inputmode="numeric" autocomplete="off" required></div>
+<div class="field"><label>Catatan kondisi awal</label><textarea id="cbNote" rows="2"></textarea></div>
+</form>
+  </div>
+  
+<div class="card span6">
+<h2>Estimasi Harga &amp; Margin</h2>
+<p class="note">Gunakan harga pasar realistis, bukan hanya harga iklan tertinggi.</p>
+<div class="field"><label>Harga jual rencana (Rp)</label><input id="ccSalePlan" type="text" inputmode="numeric" value="0"></div>
+<div class="field"><label>Perkiraan biaya servis (Rp)</label><input id="ccService" type="text" inputmode="numeric" value="0"></div>
+<div class="field"><label>Perkiraan biaya pajak (Rp)</label><input id="ccTax" type="text" inputmode="numeric" value="0"></div>
+<div class="field"><label>Total perkiraan biaya awal (servis + pajak)</label><input id="ccInitialCost" type="text" value="0" readonly></div>
+<div class="field"><label>Target laba (Rp)</label><input id="ccTarget" type="text" inputmode="numeric" value="1000000"></div>
+<div class="metric">Modal perkiraan <b id="ccCapital">Rp0</b></div>
+<div class="metric">Harga beli maksimal <b id="ccMaxBuy">Rp0</b></div>
+<div class="metric">Margin rencana <b id="ccMargin">Rp0</b></div>
+<button class="btn secondary" type="button" id="ccApply">Gunakan harga beli maksimal</button>
+<div style="margin-top:12px"><button class="btn" type="submit" form="carBuyForm">Simpan Mobil Masuk</button></div>
+</div>
+</div>
+</section>
+<script>
+const $=id=>document.getElementById(id), rupiah=n=>'Rp'+Math.round(Number(n)||0).toLocaleString('en-US'), today=()=>new Date().toISOString().slice(0,10), uid=()=>Date.now().toString(36)+Math.random().toString(36).slice(2,7);
+const motorCatalog={Honda:["Beat","Beat Street","Scoopy","Vario 125","Vario 150","Vario 160","PCX 150","PCX 160","ADV 150","ADV 160","CB150R","CBR150R","Revo","Supra X 125"],Yamaha:["Mio M3","Mio Soul","Fino","Gear 125","FreeGo","Lexi","NMAX 155","Aerox 155","X-Ride","Vixion","R15","R25","Jupiter Z","MX King"],Suzuki:["Nex II","Address","Spin","Satria FU 150","GSX-R150","GSX-S150","Smash","Shogun"],Kawasaki:["Ninja 250","Ninja 150 RR","KLX 150","W175","Versys 250","ZX-25R"],TVS:["Dazz","Ntorq 125","Apache RTR 160"],Lainnya:["Motor lainnya"]};
+function fillModelOptions(brandId,modelId,nameId){let brand=$(brandId).value,models=motorCatalog[brand]||[];$(modelId).innerHTML='<option value="">Pilih tipe / model</option>'+models.map(x=>`<option>${x}</option>`).join('');$(nameId).innerHTML='<option value="">Pilih nama motor</option>'+models.map(x=>`<option>${brand} ${x}</option>`).join('');}
+$('bBrand').addEventListener('change',()=>fillModelOptions('bBrand','bModel','bName'));
+$('bModel').addEventListener('change',()=>{$('bName').value=$('bBrand').value+' '+$('bModel').value});
+$('nbBrand').addEventListener('change',()=>fillModelOptions('nbBrand','nbModel','nbName'));
+$('nbModel').addEventListener('change',()=>{$('nbName').value=$('nbBrand').value+' '+$('nbModel').value});
+
+const moneyValue=id=>Number(String($(id).value).replace(/[^0-9]/g,''))||0;
+function formatMoneyInput(el){let raw=el.value.replace(/[^0-9]/g,''),before=el.value.slice(0,el.selectionStart).replace(/[^0-9]/g,'').length;el.value=raw?Number(raw).toLocaleString('en-US'):'';
+ let pos=0,count=0;while(pos<el.value.length&&count<before){if(/[0-9]/.test(el.value[pos]))count++;pos++}el.setSelectionRange(pos,pos)}
+["cbPrice","ccSalePlan","ccService","ccTax","ccTarget","csPrice","bPrice","bSalePlan","bEstService","bEstTax","bInitialCost","bTarget","cAmount","sPrice","nbAsk","nbOffer","nbCost","nbTarget","nsAsk","nsOffer","nsCounter"].forEach(id=>{let el=$(id);if(el){el.addEventListener('input',()=>formatMoneyInput(el));if(el.value)formatMoneyInput(el)}});
+let db=JSON.parse(localStorage.getItem('motorShowroomDB')||'{"motors":[],"costs":[],"sales":[]}');db.negotiations=db.negotiations||[];db.cars=db.cars||[];db.carSales=db.carSales||[];
+function save(){localStorage.setItem('motorShowroomDB',JSON.stringify(db));renderAll()}
+function motor(id){return db.motors.find(x=>x.id===id)}
+function costs(id){return db.costs.filter(x=>x.motorId===id).reduce((s,x)=>s+x.amount,0)}
+function capital(m){return m.buyPrice+costs(m.id)+m.initialCost}
+function sold(m){return db.sales.find(x=>x.motorId===m.id)}
+function esc(s){return String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+$('nav').addEventListener('click',e=>{let b=e.target.closest('button[data-page]');if(!b)return;document.querySelectorAll('nav button').forEach(x=>x.classList.toggle('active',x===b));document.querySelectorAll('.page').forEach(x=>x.classList.toggle('active',x.id===b.dataset.page));renderAll()});
+function refreshSelects(){let sOld=$('sMotor').value,opts='<option value="">-- Pilih motor --</option>'+db.motors.filter(m=>!sold(m)).map(m=>`<option value="${m.id}">${esc(m.name)} • ${esc(m.plate||'tanpa plat')}</option>`).join('');$('sMotor').innerHTML=opts;if(motor(sOld)&&!sold(motor(sOld)))$('sMotor').value=sOld}
+function renderStock(){let q=$('stockSearch').value.toLowerCase(),f=$('stockFilter').value;let list=db.motors.filter(m=>(!q||(m.name+' '+m.plate+' '+m.frame).toLowerCase().includes(q))&&(!f||(sold(m)?'Terjual':'Stok')===f));$('stockTable').innerHTML=list.map(m=>{let sale=sold(m);return `<tr><td><b>${esc(m.name)}</b><br><small>${esc(m.brand||'')} ${esc(m.model||'')}</small></td><td>${esc(m.plate||'-')}<br><small>${esc(m.frame||'-')}</small></td><td>${esc(m.year||'-')}</td><td>${rupiah(capital(m))}</td><td>${rupiah(m.salePlan||0)}</td><td><span class="badge ${sale?'green':'orange'}">${sale?'Terjual':'Stok'}</span></td><td><button class="btn red" onclick="deleteMotor('${m.id}')">Hapus</button></td></tr>`}).join('')||'<tr><td colspan="7" class="empty">Belum ada data motor.</td></tr>'}
+function renderDash(){
+ let available=db.motors.filter(m=>!sold(m)),carAvailable=db.cars.filter(c=>!carSold(c)),sales=db.sales,carSales=db.carSales;
+ let motorProfit=sales.reduce((s,x)=>s+(Number(x.profit)||0),0),carProfit=carSales.reduce((s,x)=>s+(Number(x.profit)||0),0);
+ $('kStok').textContent=(available.length+carAvailable.length)+' unit';
+ $('kModal').textContent=rupiah(available.reduce((s,m)=>s+capital(m),0)+carAvailable.reduce((s,c)=>s+carCapital(c),0));
+ $('kSold').textContent=(sales.length+carSales.length)+' unit';
+ $('kProfit').textContent=rupiah(motorProfit+carProfit);
+ $('dashMotorStock').textContent=available.length+' unit';$('dashMotorSold').textContent=sales.length+' unit';
+ $('dashCarStock').textContent=carAvailable.length+' unit';$('dashCarSold').textContent=carSales.length+' unit';
+ let motorList=available.slice(0,5).map(m=>`<div class="metric">🏍️ ${esc(m.name)} <b>${rupiah(capital(m))}</b><br><small>${esc(m.plate||'')} • ${m.year||'-'}</small></div>`).join('');
+ let carList=carAvailable.slice(0,5).map(c=>`<div class="metric">🚘 ${esc(c.name)} <b>${rupiah(carCapital(c))}</b><br><small>${esc(c.plate||'')} • ${c.year||'-'}</small></div>`).join('');
+ $('dashStock').innerHTML=(motorList||'<p class="empty">Belum ada motor di stok.</p>')+(carList||'<p class="empty">Belum ada mobil di stok.</p>');
+ let month=today().slice(0,7);
+ let motorBuy=db.motors.filter(m=>m.buyDate?.startsWith(month)).reduce((s,m)=>s+(Number(m.buyPrice)||0),0);
+ let carBuy=db.cars.filter(c=>c.buyDate?.startsWith(month)).reduce((s,c)=>s+(Number(c.buyPrice)||0),0);
+ let motorSale=sales.filter(s=>s.date?.startsWith(month)).reduce((s,x)=>s+(Number(x.price)||0),0);
+ let carSale=carSales.filter(s=>s.date?.startsWith(month)).reduce((s,x)=>s+(Number(x.price)||0),0);
+ $('dBuy').textContent=rupiah(motorBuy);$('dCarBuy').textContent=rupiah(carBuy);
+ $('dSale').textContent=rupiah(motorSale);$('dCarSale').textContent=rupiah(carSale);
+ $('dTotalSale').textContent=rupiah(motorSale+carSale);
+ $('dCost').textContent=rupiah(db.costs.filter(c=>c.date?.startsWith(month)).reduce((s,x)=>s+(Number(x.amount)||0),0));
+}
+function renderAll(){refreshSelects();renderStock();renderDash();simulateSale(!!motor($('sMotor').value));refreshCarSelect();renderCarStock();refreshNegoSelect();renderNego()}
+$('stockSearch').oninput=renderStock;$('stockFilter').onchange=renderStock;$('carStockSearch').oninput=renderCarStock;$('carStockFilter').onchange=renderCarStock;
+$('bDate').value=today();$('sDate').value=today();
+function calcBuy(){let sale=moneyValue('bSalePlan')||0,cost=(moneyValue('bEstService')||0)+(moneyValue('bEstTax')||0),target=moneyValue('bTarget')||0,buy= Math.max(0,sale-cost-target);$('bInitialCost').value=cost?cost.toLocaleString('en-US'):'0';$('bEstCapital').textContent=rupiah(buy+cost);$('bMaxBuy').textContent=rupiah(buy);$('bMargin').textContent=rupiah(sale-buy-cost)}
+['bSalePlan','bEstService','bEstTax','bTarget'].forEach(id=>$(id).oninput=calcBuy);$('applyBuyCalc').onclick=()=>{$('bPrice').value=Number($('bMaxBuy').textContent.replace(/[^\d]/g,'')).toLocaleString('en-US');};
+$('buyForm').onsubmit=e=>{e.preventDefault();let m={id:uid(),name:$('bName').value.trim(),brand:$('bBrand').value,model:$('bModel').value,year:+$('bYear').value||'',color:$('bColor').value,plate:$('bPlate').value.trim().toUpperCase(),frame:$('bFrame').value.trim(),km:+$('bKm').value||0,seller:$('bSeller').value,buyDate:$('bDate').value,buyPrice:moneyValue('bPrice'),initialCost:(moneyValue('bEstService')||0)+(moneyValue('bEstTax')||0),initialService:moneyValue('bEstService')||0,initialTax:moneyValue('bEstTax')||0,salePlan:moneyValue('bSalePlan')||0,target:moneyValue('bTarget')||0,note:$('bNote').value};db.motors.push(m);e.target.reset();$('bDate').value=today();$('bInitialCost').value=0;$('bTarget').value=1000000;save();alert('Motor berhasil dicatat sebagai stok masuk.')};
+function simulateSale(autoFill=false){let m=motor($('sMotor').value);if(autoFill&&m){let realistic=capital(m)+(Number(m.target)||0);$('sPrice').value=Math.max(0,realistic).toLocaleString('en-US')}let price=moneyValue('sPrice')||0;$('sCapital').textContent=m?rupiah(capital(m)):'Rp0';$('sSimPrice').textContent=rupiah(price);$('sSimProfit').textContent=rupiah(m?price-capital(m):0)}
+$('sMotor').onchange=()=>simulateSale(true);$('sPrice').oninput=()=>simulateSale(false);
+$('saleForm').onsubmit=e=>{e.preventDefault();let m=motor($('sMotor').value);if(!m||sold(m))return alert('Motor tidak tersedia.');let price=moneyValue('sPrice'),cap=capital(m);if(!Number.isFinite(price)||price<=0)return alert('Harga jual harus lebih dari Rp0.');db.sales.push({id:uid(),motorId:m.id,date:$('sDate').value,price,capital:cap,profit:price-cap,buyer:$('sBuyer').value,contact:$('sContact').value,payment:$('sPayment').value,note:$('sNote').value});e.target.reset();$('sDate').value=today();save();alert('Penjualan berhasil dicatat. Motor berpindah ke status Terjual.')};
+
+// ===== Modul Jual Beli Mobil (data terpisah, tidak mengubah transaksi motor) =====
+
+const carCatalog={
+"Toyota":["Kijang","Kijang Innova","Innova Zenix","Avanza","Veloz","Rush","Fortuner","Hilux","Land Cruiser","Corolla","Corolla Altis","Yaris","Agya","Calya","Raize","Camry","Alphard","Vellfire","Sienta","Yaris Cross","Vios","Prius","Crown","Starlet","Corona","Cressida","Soluna","RAV4","Harrier","HiAce","Dyna"],
+"Honda":["Civic","Accord","City","City Hatchback","Brio","Jazz","Mobilio","Freed","HR-V","CR-V","BR-V","WR-V","Stream","Odyssey","Prelude","Integra","NSX"],
+"Suzuki":["Carry","Super Carry","Katana","Jimny","Vitara","Grand Vitara","Baleno","Esteem","Swift","SX4","Ertiga","XL7","APV","Ignis","S-Presso","Fronx"],
+"Mitsubishi":["Lancer","Galant","Colt T120","L300","Pajero","Pajero Sport","Kuda","Xpander","Xpander Cross","Xforce","Mirage","Triton","Outlander"],
+"Daihatsu":["Charade","Feroza","Taft","Espass","Zebra","Mira","Xenia","Terios","Ayla","Sigra","Rocky","Gran Max","Luxio","Sirion"],
+"Isuzu":["Panther","Trooper","Gemini","Pickup","D-Max","MU-X","Elf","Giga"],
+"Nissan":["Sentra","Sunny","Terrano","Patrol","Datsun","Livina","Grand Livina","Serena","X-Trail","Terra","March","Juke","Navara","Kicks","Almera"],
+"Mazda":["323","626","RX-7","Bongo","Mazda 2","Mazda 3","Mazda 6","CX-3","CX-5","CX-8","CX-9","CX-30","MX-5"],
+"Mercedes-Benz":["190E","W123","W124","W126","W140","C-Class","E-Class","S-Class","A-Class","B-Class","CLA","CLS","GLA","GLB","GLC","GLE","GLS","G-Class","Sprinter"],
+"BMW":["E30","E36","E34","E39","E46","E90","F30","G20","1 Series","2 Series","3 Series","4 Series","5 Series","7 Series","X1","X2","X3","X4","X5","X6","X7","Z3","Z4"],
+"Jeep":["CJ-7","Cherokee","Wrangler","Grand Cherokee","Compass","Renegade","Gladiator"],
+"Volkswagen":["Beetle","Kombi","Golf","Polo","Passat","Tiguan","Touran"],
+"Ford":["Laser","Telstar","Everest","Ranger","EcoSport","Fiesta","Focus","Escape","Mustang","Territory"],
+"Peugeot":["405","505","406","206","207","307","308","3008","5008"],
+"Volvo":["240","740","850","S40","S60","S80","S90","V40","V60","XC40","XC60","XC90"],
+"Subaru":["Leone","Legacy","Impreza","Forester","XV","Outback","BRZ","WRX"],
+"Hyundai":["Excel","Accent","Elantra","Getz","i10","i20","i30","Ioniq","Kona","Santa Fe","Tucson","Staria","Creta"],
+"Kia":["Picanto","Rio","Cerato","Forte","Optima","K5","Sportage","Sorento","Seltos","Carens","Carnival","EV6"],
+"Daewoo":["Espero","Cielo","Lanos","Nubira","Matiz","Leganza"],
+"Timor":["S515","S516"],
+"Wuling":["Air ev","Almaz","Almaz RS","Confero","Cortez","Formo","BinguoEV","Cloud EV"],
+"Chery":["QQ","Tiggo 4","Tiggo 5X","Tiggo 7","Tiggo 8","Omoda 5","Omoda E5","Jaecoo J7"],
+"BYD":["Dolphin","Atto 3","Seal","M6","Sealion 7","Tang","Han"],
+"MG":["ZS","HS","5","4 EV","Cyberster"],
+"DFSK":["Glory 560","Glory 580","Super Cab","Gelora","Seres 3"],
+"Geely":["Coolray","Okavango","EX5"],
+"Lexus":["LS","ES","IS","RX","NX","UX","LX","LM"],
+"Audi":["A3","A4","A6","A8","Q3","Q5","Q7","Q8","TT","e-tron"],
+"Porsche":["911","Boxster","Cayman","Panamera","Macan","Cayenne","Taycan"],
+"Land Rover":["Defender","Discovery","Range Rover","Range Rover Sport","Evoque","Velar"],
+"Tesla":["Model 3","Model S","Model X","Model Y"],
+"MINI":["Cooper","Countryman","Clubman"],
+"Renault":["Kwid","Clio","Megane","Duster","Captur","Triber"],
+"Fiat":["Uno","Palio","Punto","500","Doblo","Fiorino"],
+"Jaguar":["X-Type","XE","XF","XJ","F-Pace","E-Pace","F-Type"],
+"Alfa Romeo":["Giulia","Stelvio","Tonale"],
+"BAIC":["BJ40","X55","X7"],
+"Changan":["CS35 Plus","CS75 Plus","UNI-T"],
+"Foton":["Tunland","Aumark"],
+"Maxus":["G10","Mifa 9","T90"],
+"VinFast":["VF 5","VF 6","VF 7","VF 8","VF 9"]
+};
+function initCarCatalog(){
+ const brand=$('cbBrand'),model=$('cbModel');
+ brand.innerHTML='<option value="">-- Pilih merk --</option>'+Object.keys(carCatalog).map(x=>`<option>${x}</option>`).join('');
+ brand.onchange=()=>{model.innerHTML='<option value="">-- Pilih model / tipe --</option>'+(carCatalog[brand.value]||[]).map(x=>`<option>${x}</option>`).join('');model.disabled=!brand.value;$('cbName').value='';};
+ model.onchange=()=>{$('cbName').value=model.value?(brand.value+' '+model.value):'';};
+}
+initCarCatalog();
+
+const carMoney=id=>Number(String($(id).value||'').replace(/[^0-9]/g,''))||0;
+const carById=id=>db.cars.find(c=>c.id===id);
+const carSold=c=>db.carSales.find(s=>s.carId===c.id);
+const carCapital=c=>(Number(c.buyPrice)||0)+(Number(c.cost)||0);
+
+function refreshCarSelect(){let old=$('csCar').value;$('csCar').innerHTML='<option value="">-- Pilih mobil --</option>'+db.cars.filter(c=>!carSold(c)).map(c=>`<option value="${c.id}">${esc(c.name)} • ${esc(c.plate||'tanpa plat')}</option>`).join('');if(carById(old)&&!carSold(carById(old)))$('csCar').value=old;carSaleSim()}
+function carSaleSim(autoFill=false){let c=carById($('csCar').value);if(autoFill&&c){let planned=Number(c.salePlan)||carCapital(c);$('csPrice').value=Math.max(0,planned).toLocaleString('en-US')}let p=carMoney('csPrice'),cap=c?carCapital(c):0;$('csCapital').textContent=c?rupiah(cap):'Rp0';$('csSimPrice').textContent=rupiah(p);$('csProfit').textContent=c?rupiah(p-cap):'Rp0'}$('csCar').onchange=()=>carSaleSim(true);$('csPrice').oninput=()=>carSaleSim(false);
+function renderCarStock(){
+ let q=$('carStockSearch').value.toLowerCase(),f=$('carStockFilter').value;
+ let list=(db.cars||[]).filter(c=>(!q||(String(c.name||'')+' '+String(c.plate||'')+' '+String(c.frame||'')).toLowerCase().includes(q))&&(!f||(carSold(c)?'Terjual':'Stok')===f));
+ let available=list.filter(c=>!carSold(c));
+ $('carStockCount').textContent=available.length+' unit';
+ $('carStockCapital').textContent=rupiah(available.reduce((s,c)=>s+carCapital(c),0));
+ $('carStockTable').innerHTML=list.map(c=>{let s=carSold(c);return `<tr><td><b>${esc(c.name||'Mobil')}</b><br><small>${esc(c.brand||'')} ${esc(c.model||'')}</small></td><td>${esc(c.plate||'-')}<br><small>${esc(c.frame||'-')}</small></td><td>${esc(c.year||'-')}</td><td>${Number(c.km||0).toLocaleString('en-US')}</td><td>${rupiah(carCapital(c))}</td><td style="min-width:190px"><input id="planCar_${c.id}" type="text" inputmode="numeric" value="${Number(c.salePlan||0).toLocaleString('en-US')}" ${s?'disabled':''} style="width:150px;min-width:150px;margin-bottom:6px"><br>${s?'':'<button class="btn secondary" type="button" onclick="saveCarPlan(\''+c.id+'\')">Simpan rencana</button>'}</td><td><span class="badge ${s?'green':'orange'}">${s?'Terjual':'Stok'}</span></td><td>${s?'—':`<button class="btn red" onclick="deleteCar('${c.id}')">Hapus</button>`}</td></tr>`}).join('')||'<tr><td colspan="8" class="empty">Belum ada mobil masuk stok.</td></tr>';
+}
+function renderCars(){let q=$('carSearch').value.toLowerCase(),f=$('carFilter').value;let rows=db.cars.filter(c=>(!q||(c.name+' '+c.plate+' '+c.frame).toLowerCase().includes(q))&&(!f||(carSold(c)?'Terjual':'Stok')===f));$('carTable').innerHTML=rows.map(c=>{let s=carSold(c);return `<tr><td><b>${esc(c.name)}</b><br><small>${esc(c.trans||'')}</small></td><td>${esc(c.plate||'-')}<br><small>${esc(c.frame||'-')}</small></td><td>${esc(c.year||'-')}</td><td>${Number(c.km||0).toLocaleString('en-US')}</td><td>${rupiah(carCapital(c))}</td><td>${rupiah(c.salePlan||0)}</td><td><span class="badge ${s?'green':'orange'}">${s?'Terjual':'Stok'}</span></td><td>${s?'—':`<button class="btn red" onclick="deleteCar('${c.id}')">Hapus</button>`}</td></tr>`}).join('')||'<tr><td colspan="8" class="empty">Belum ada data mobil.</td></tr>';
+$('carSalesTable').innerHTML=db.carSales.slice().reverse().map(s=>{let c=carById(s.carId);return `<tr><td>${esc(s.date)}</td><td>${esc(c?.name||s.carName||'Mobil')}</td><td>${rupiah(s.price)}</td><td>${rupiah(s.capital)}</td><td>${rupiah(s.profit)}</td><td>${esc(s.buyer||'-')}</td></tr>`}).join('')||'<tr><td colspan="6" class="empty">Belum ada penjualan mobil.</td></tr>'}
+window.deleteCar=id=>{if(!confirm('Hapus data mobil ini?'))return;db.cars=db.cars.filter(c=>c.id!==id);save()};
+$('cbDate').value=today();$('csDate').value=today();
+$('carBuyForm').addEventListener('submit',function(e){
+ e.preventDefault();
+ try{
+  const brand=$('cbBrand').value.trim(),model=$('cbModel').value.trim(),year=Number($('cbYear').value)||0;
+  if(!brand)return alert('Pilih merk mobil terlebih dahulu.');
+  if(!model)return alert('Pilih model / tipe mobil terlebih dahulu.');
+  if(!$('cbName').value.trim())$('cbName').value=brand+' '+model;
+  if(year&&year<2000)return alert('Tahun produksi minimal 2000.');
+  const price=carMoney('cbPrice');
+  if(price<=0)return alert('Harga beli mobil harus lebih dari Rp0.');
+  const car={id:uid(),brand,model,name:$('cbName').value.trim(),year:year||'',trans:$('cbTransmission').value,color:$('cbColor').value,plate:$('cbPlate').value.trim().toUpperCase(),frame:$('cbFrame').value.trim(),km:Number($('cbKm').value)||0,seller:$('cbSeller').value,buyDate:$('cbDate').value||today(),buyPrice:price,cost:0,salePlan:carMoney('ccSalePlan'),note:$('cbNote').value};
+  db.cars=db.cars||[];
+  db.cars.push(car);
+  localStorage.setItem('motorShowroomDB',JSON.stringify(db));
+  $('carBuyForm').reset();
+  $('cbDate').value=today();
+  initCarCatalog();renderAll();
+  alert('Mobil berhasil masuk stok.');
+ }catch(err){console.error('Simpan mobil masuk gagal:',err);alert('Gagal menyimpan mobil: '+(err.message||err));}
+});
+$('csCar').onchange=()=>{let c=carById($('csCar').value);$('csPrice').value=c&&c.salePlan?c.salePlan.toLocaleString('en-US'):'';carSaleSim()};
+$('csPrice').oninput=carSaleSim;
+$('carSaleForm').onsubmit=e=>{e.preventDefault();let c=carById($('csCar').value),p=carMoney('csPrice');if(!c||carSold(c))return alert('Mobil tidak tersedia atau sudah terjual.');if(p<=0)return alert('Harga jual harus lebih dari Rp0.');let cap=carCapital(c);db.carSales.push({id:uid(),carId:c.id,carName:c.name,date:$('csDate').value,price:p,capital:cap,profit:p-cap,buyer:$('csBuyer').value,contact:$('csContact').value,payment:$('csPayment').value,note:$('csNote').value});e.target.reset();$('csDate').value=today();save();alert('Penjualan mobil berhasil dicatat.')};
+
+
+function refreshNegoSelect(){let sel=$('nsMotor');if(!sel)return;let old=sel.value;sel.innerHTML='<option value="">-- Pilih motor --</option>'+db.motors.filter(m=>!sold(m)).map(m=>`<option value="${m.id}">${esc(m.name)} • ${esc(m.plate||'tanpa plat')}</option>`).join('');if(motor(old)&&!sold(motor(old)))sel.value=old;simNegoSale()}
+function simNegoBuy(){let ask=moneyValue('nbAsk'),offer=moneyValue('nbOffer'),deal=moneyValue('nbDealPrice'),cost=moneyValue('nbCost'),target=moneyValue('nbTarget');$('nbMax').textContent=rupiah(Math.max(0,ask-cost-target));let basis=deal||offer||ask,realistic=basis+cost+target;$('nbRealisticSale').textContent=rupiah(realistic);$('nbRealisticBasis').textContent='Basis harga beli: '+rupiah(basis)+' ('+(deal?'Harga Deal final':offer?'Tawaran showroom':'Harga penjual')+') + biaya awal '+rupiah(cost)+' + target laba '+rupiah(target)+'. Estimasi laba pada harga realistis: '+rupiah(realistic-(basis+cost))}
+function simNegoSale(){let m=motor($('nsMotor')?.value),cap=m?capital(m):0,target=moneyValue('nsTargetProfit')||0,realistic=cap+target,price=moneyValue('nsDealPrice')||moneyValue('nsCounter')||moneyValue('nsOffer')||moneyValue('nsAsk');if($('nsCapital'))$('nsCapital').textContent=m?rupiah(cap):'Rp0';if($('nsRealistic'))$('nsRealistic').textContent=m?rupiah(realistic):'Rp0';if($('nsProfit'))$('nsProfit').textContent=rupiah(m?price-cap:0);if($('nsMotorSource'))$('nsMotorSource').innerHTML=m?'<b>DATA SUMBER: STOK MOTOR</b><br>Motor: '+esc(m.name)+' • '+esc(m.brand||'-')+' '+esc(m.model||'')+' • Tahun '+esc(m.year||'-')+'<br>Harga beli: '+rupiah(m.buyPrice)+' • Biaya awal: '+rupiah(m.initialCost||0)+' • Biaya servis/tercatat: '+rupiah(costs(m.id))+'<br><b>Total modal terkini: '+rupiah(cap)+'</b>':'Pilih motor untuk melihat data stok, harga beli, biaya, dan modal otomatis.'}
+['nbAsk','nbOffer','nbDealPrice','nbCost','nbTarget'].forEach(id=>$(id).oninput=simNegoBuy);
+['nsMotor','nsAsk','nsOffer','nsCounter','nsDealPrice','nsTargetProfit'].forEach(id=>$(id).oninput=simNegoSale);simNegoBuy();
+$('nsMotor').onchange=()=>{let m=motor($('nsMotor').value);if(m&&$('nsTargetProfit'))$('nsTargetProfit').value=Number(m.target||1000000).toLocaleString('en-US');simNegoSale()};
+$('negoBuyForm').onsubmit=e=>{e.preventDefault();let status=$('nbStatus').value,deal=moneyValue('nbDealPrice'),rec={id:uid(),kind:'Pembelian',date:today(),name:$('nbName').value.trim(),seller:$('nbSeller').value,contact:$('nbContact').value,ask:moneyValue('nbAsk'),offer:moneyValue('nbOffer'),dealPrice:deal,cost:moneyValue('nbCost'),target:moneyValue('nbTarget'),status,note:$('nbNote').value};if(status==='Deal'){if(!deal)return alert('Isi HARGA DEAL final yang benar-benar disepakati.');if(deal+rec.cost+rec.target>0&&deal>rec.ask&&rec.ask>0)alert('Perhatian: harga deal lebih tinggi dari harga penjual. Pastikan angka benar.');rec.motorId=uid();db.motors.push({id:rec.motorId,name:rec.name,brand:$('nbBrand').value.trim(),model:$('nbModel').value.trim(),year:+$('nbYear').value||'',color:'',plate:'',frame:'',km:0,seller:rec.seller,buyDate:today(),buyPrice:deal,initialCost:rec.cost,salePlan:deal+rec.cost+rec.target,target:rec.target,note:'Dari negosiasi: '+rec.note,negoId:rec.id});rec.note+=' | Motor masuk stok (harga deal '+rupiah(deal)+').'}db.negotiations.push(rec);e.target.reset();$('nbCost').value='0';$('nbTarget').value='1,000,000';simNegoBuy();save();alert(status==='Deal'?'Deal pembelian tersimpan. Motor masuk stok dengan harga kesepakatan final.':'Negosiasi pembelian disimpan.')};
+$('nsForm').onsubmit=e=>{e.preventDefault();let m=motor($('nsMotor').value);if(!m||sold(m))return alert('Motor tidak tersedia atau sudah terjual.');let status=$('nsStatus').value,deal=moneyValue('nsDealPrice'),rec={id:uid(),kind:'Penjualan',date:today(),motorId:m.id,name:m.name,buyer:$('nsBuyer').value,contact:$('nsContact').value,ask:moneyValue('nsAsk'),offer:moneyValue('nsOffer'),counter:moneyValue('nsCounter'),dealPrice:deal,status,note:$('nsNote').value};if(status==='Deal'){if(!deal)return alert('Isi HARGA DEAL final yang benar-benar disepakati.');if(db.sales.some(x=>x.motorId===m.id))return alert('Motor ini sudah memiliki transaksi penjualan.');let cap=capital(m);db.sales.push({id:uid(),negoId:rec.id,motorId:m.id,date:today(),price:deal,capital:cap,profit:deal-cap,buyer:rec.buyer,contact:rec.contact,payment:'Belum ditentukan',note:'Deal dari negosiasi: '+rec.note});rec.note+=' | Penjualan tercatat dengan harga deal '+rupiah(deal)+'.'}db.negotiations.push(rec);e.target.reset();save();alert(status==='Deal'?'Deal penjualan tersimpan. Motor menjadi Terjual dan masuk laporan.':'Negosiasi penjualan disimpan.')};
+function renderNego(){let rows=(db.negotiations||[]).slice().reverse();$('negoTable').innerHTML=rows.map(n=>`<tr><td>${n.date}</td><td>${esc(n.kind)}</td><td><b>${esc(n.name||motor(n.motorId)?.name||'-')}</b><br><small>${esc(n.buyer||n.seller||'')}</small></td><td>${rupiah(n.dealPrice||n.counter||n.offer||n.ask||0)}<br><small>Ask ${rupiah(n.ask||0)} • Offer ${rupiah(n.offer||0)}</small></td><td><span class="badge ${n.status==='Deal'?'green':n.status==='Batal'?'red':'orange'}">${esc(n.status)}</span></td><td>${esc(n.note||'-')}</td><td><button class="btn red" onclick="deleteNego('${n.id}')">Hapus</button></td></tr>`).join('')||'<tr><td colspan="7" class="empty">Belum ada riwayat negosiasi.</td></tr>'}
+window.deleteNego=id=>{if(!confirm('Hapus riwayat negosiasi ini?'))return;db.negotiations=db.negotiations.filter(n=>n.id!==id);save()};
+function report(){
+ let a=$('rFrom').value,b=$('rTo').value;
+ const inPeriod=s=>(!a||s.date>=a)&&(!b||s.date<=b);
+ const motorRows=db.sales.filter(inPeriod).map(s=>({...s,vehicleType:'Motor',vehicleName:motor(s.motorId)?.name||'Motor'}));
+ const carRows=db.carSales.filter(inPeriod).map(s=>({...s,vehicleType:'Mobil',vehicleName:carById(s.carId)?.name||s.carName||'Mobil'}));
+ const list=[...motorRows,...carRows].sort((x,y)=>(x.date||'').localeCompare(y.date||''));
+ let gross=list.reduce((s,x)=>s+(Number(x.profit)||0),0),penghubung=list.length*100000,gaji=1500000,net=gross-penghubung-gaji;
+ $('rCount').textContent=list.length;
+ $('rOmzet').textContent=rupiah(list.reduce((s,x)=>s+(Number(x.price)||0),0));
+ $('rCapital').textContent=rupiah(list.reduce((s,x)=>s+(Number(x.capital)||0),0));
+ $('rProfit').textContent=rupiah(gross);$('rPenghubung').textContent=rupiah(penghubung);$('rSalary').textContent=rupiah(gaji);$('rNetProfit').textContent=rupiah(net);
+ $('reportTable').innerHTML=list.map(s=>`<tr><td>${esc(s.date||'-')}</td><td><b>${esc(s.vehicleName)}</b><br><small>${s.vehicleType}</small></td><td>${rupiah(s.price)}</td><td>${rupiah(s.capital)}</td><td>${rupiah(s.profit)}</td><td>${esc(s.buyer||'-')}</td></tr>`).join('')||'<tr><td colspan="6" class="empty">Tidak ada transaksi pada rentang tanggal ini.</td></tr>';
+ return list
+}
+$('runReport').onclick=report;
+$('exportReport').onclick=()=>csv([['Tanggal','Jenis','Kendaraan','Harga Jual','Modal','Laba','Pembeli'],...report().map(s=>[s.date,s.vehicleType,s.vehicleName,s.price,s.capital,s.profit,s.buyer]),[],['Ringkasan','Jumlah terjual',$('rCount').textContent],['Omzet',$('rOmzet').textContent],['Total Modal',$('rCapital').textContent],['Laba Kotor',$('rProfit').textContent],['Biaya Penghubung',$('rPenghubung').textContent],['Gaji karyawan',$('rSalary').textContent],['Laba bersih',$('rNetProfit').textContent]],'laporan_penjualan_motor_mobil.csv');
+$('exportExcel').onclick=()=>{
+ let list=report(), period=($('rFrom').value||'Semua')+' s/d '+($('rTo').value||'Semua');
+ const escX=v=>String(v??'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+ let detail=list.map((x,i)=>`<tr><td>${i+1}</td><td>${escX(x.date)}</td><td>${escX(x.vehicleName+' ('+x.vehicleType+')')}</td><td class="num">${Number(x.price)||0}</td><td class="num">${Number(x.capital)||0}</td><td class="num">${Number(x.profit)||0}</td><td>${escX(x.buyer||'-')}</td></tr>`).join('');
+ let wb=`<!doctype html><html><head><meta charset="utf-8"><style>
+ body{font-family:Calibri,Arial;color:#172033}h1{color:#17365d;font-size:22pt}h2{background:#17365d;color:white;padding:8px}
+ table{border-collapse:collapse;width:100%;margin:8px 0 20px}th{background:#d9eaf7;color:#17365d;font-weight:bold}
+ td,th{border:1px solid #aab7c4;padding:7px} .num{text-align:right;mso-number-format:"#,##0"} .label{font-weight:bold;background:#eef3f8}.amount{font-weight:bold;text-align:right}
+ </style></head><body>
+ <h1>LAPORAN PENJUALAN MOTOR & MOBIL</h1><p><b>Periode:</b> ${escX(period)}<br><b>Dicetak:</b> ${today()}</p>
+ <h2>RINGKASAN KEUANGAN</h2><table><tr><td class="label">Jumlah Terjual</td><td class="amount">${list.length}</td><td class="label">Omzet</td><td class="amount">${list.reduce((a,x)=>a+(Number(x.price)||0),0)}</td></tr>
+ <tr><td class="label">Total Modal</td><td class="amount">${list.reduce((a,x)=>a+(Number(x.capital)||0),0)}</td><td class="label">Laba Kotor</td><td class="amount">${list.reduce((a,x)=>a+(Number(x.profit)||0),0)}</td></tr>
+ <tr><td class="label">Biaya Penghubung</td><td class="amount">${list.length*100000}</td><td class="label">Gaji Karyawan</td><td class="amount">1500000</td></tr>
+ <tr><td class="label">LABA BERSIH</td><td class="amount" colspan="3">${list.reduce((a,x)=>a+(Number(x.profit)||0),0)-list.length*100000-1500000}</td></tr></table>
+ <h2>DETAIL TRANSAKSI</h2><table><thead><tr><th>No</th><th>Tanggal</th><th>Kendaraan</th><th>Harga Jual (Rp)</th><th>Modal (Rp)</th><th>Laba (Rp)</th><th>Pembeli</th></tr></thead><tbody>${detail||'<tr><td colspan="7">Tidak ada transaksi pada periode ini</td></tr>'}</tbody></table>
+ <p><i>Dokumen dibuat otomatis oleh LoeMited edition Mokas Garage.</i></p><script>
+if ("serviceWorker" in navigator) {
+  window.addEventListener("load", () => navigator.serviceWorker.register("./sw.js").catch(console.error));
+}
+<\/script>
+</body></html>`;
+ let blob=new Blob([wb],{type:'application/vnd.ms-excel;charset=utf-8'}),a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='Laporan_Motor_'+today()+'.xls';a.click();setTimeout(()=>URL.revokeObjectURL(a.href),1000)
+};
+$('exportPDF').onclick=()=>{
+ let list=report(),w=window.open('','_blank');if(!w){alert('Izinkan pop-up untuk mencetak / menyimpan PDF.');return}
+ const period=($('rFrom').value||'Semua')+' s/d '+($('rTo').value||'Semua');
+ const rows=list.map((x,i)=>`<tr><td>${i+1}</td><td>${esc(x.date)}</td><td>${esc(x.vehicleName+' ('+x.vehicleType+')')}</td><td class="right">${rupiah(x.price)}</td><td class="right">${rupiah(x.capital)}</td><td class="right">${rupiah(x.profit)}</td><td>${esc(x.buyer||'-')}</td></tr>`).join('');
+ w.document.write(`<!doctype html><html><head><meta charset="utf-8"><title>Laporan Penjualan Motor</title><style>
+ @page{size:A4 landscape;margin:12mm}*{box-sizing:border-box}body{font:10px Arial,sans-serif;color:#202b3c;margin:0}
+ header{border-bottom:3px solid #17365d;padding-bottom:10px;margin-bottom:14px}h1{font-size:22px;color:#17365d;margin:0 0 5px} .sub{color:#596779;font-size:11px}
+ .cards{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin:12px 0}
+ .card{border:1px solid #ccd5df;border-radius:5px;padding:9px;background:#f6f8fb}.card small{display:block;color:#607087;margin-bottom:5px}.card strong{font-size:13px;color:#17365d}
+ h2{font-size:13px;color:#17365d;margin:16px 0 7px}
+ table{width:100%;border-collapse:collapse;table-layout:auto}thead{display:table-header-group}tr{page-break-inside:avoid}th{background:#17365d;color:#fff;font-weight:bold;text-align:left}
+ th,td{border:1px solid #c8d1dc;padding:6px 7px}tbody tr:nth-child(even){background:#f3f6fa}.right{text-align:right;white-space:nowrap}
+ .bottom{margin-top:12px;border-top:1px solid #cbd5e1;padding-top:7px;color:#68778a;font-size:9px}
+ </style></head><body><header><h1>LAPORAN PENJUALAN MOTOR & MOBIL</h1><div class="sub">Periode: ${esc(period)} &nbsp; | &nbsp; Dicetak: ${today()}</div></header>
+ <div class="cards"><div class="card"><small>Jumlah Terjual</small><strong>${$('rCount').textContent} unit</strong></div><div class="card"><small>Omzet</small><strong>${$('rOmzet').textContent}</strong></div><div class="card"><small>Total Modal</small><strong>${$('rCapital').textContent}</strong></div><div class="card"><small>Laba Kotor</small><strong>${$('rProfit').textContent}</strong></div>
+ <div class="card"><small>Biaya Penghubung</small><strong>${$('rPenghubung').textContent}</strong></div><div class="card"><small>Gaji Karyawan</small><strong>${$('rSalary').textContent}</strong></div><div class="card" style="grid-column:span 2;background:#e8f1fb"><small>LABA BERSIH</small><strong style="font-size:16px">${$('rNetProfit').textContent}</strong></div></div>
+ <h2>RINCIAN TRANSAKSI</h2><table><thead><tr><th>No</th><th>Tanggal</th><th>Kendaraan</th><th>Harga Jual</th><th>Modal</th><th>Laba</th><th>Pembeli</th></tr></thead><tbody>${rows||'<tr><td colspan="7">Tidak ada transaksi pada periode ini.</td></tr>'}</tbody></table>
+ <div class="bottom">LoeMited edition Mokas Garage • Laporan dibuat otomatis • Simpan sebagai PDF melalui pilihan printer.</div></body></html>`);
+ w.document.close();w.focus();setTimeout(()=>w.print(),350)
+};
+function csv(rows,name){let content=rows.map(r=>r.map(v=>'"'+String(v??'').replace(/"/g,'""')+'"').join(',')).join('\r\n'),blob=new Blob(['\ufeff'+content],{type:'text/csv;charset=utf-8'}),a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=name;a.click();URL.revokeObjectURL(a.href)}
+window.deleteMotor=id=>{if(!confirm('Hapus data motor ini?'))return;db.motors=db.motors.filter(m=>m.id!==id);db.costs=db.costs.filter(c=>c.motorId!==id);db.sales=db.sales.filter(s=>s.motorId!==id);save()};
+window.deleteCost=id=>{if(!confirm('Hapus catatan biaya ini?'))return;db.costs=db.costs.filter(c=>c.id!==id);save()};
+$('backup').onclick=()=>{let blob=new Blob([JSON.stringify(db,null,2)],{type:'application/json'}),a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='backup_motor_showroom_'+today()+'.json';a.click();URL.revokeObjectURL(a.href)};
+$('restore').onchange=e=>{let file=e.target.files[0];if(!file)return;let r=new FileReader();r.onload=()=>{try{let x=JSON.parse(r.result);if(!Array.isArray(x.motors)||!Array.isArray(x.costs)||!Array.isArray(x.sales))throw Error();if(confirm('Import akan mengganti data saat ini. Lanjutkan?')){db=x;save();alert('Backup berhasil dipulihkan.')}}catch(err){alert('File backup tidak valid.')}e.target.value=''};r.readAsText(file)};
+$('clearAll').onclick=()=>{if(confirm('Yakin menghapus SEMUA stok, biaya, dan penjualan?'))if(confirm('Konfirmasi terakhir: data tidak dapat dikembalikan tanpa backup.')){db={motors:[],costs:[],sales:[]};save()}};
+calcBuy();renderAll();
+
+// Kalkulator estimasi harga & margin Pembelian Mobil
+(function(){
+ const $c=id=>document.getElementById(id);
+ const num=id=>parseInt(($c(id)?.value||'0').toString().replace(/[^\d]/g,''),10)||0;
+ const fmt=n=>Math.max(0,n).toLocaleString('en-US');
+ const rup=n=>'Rp'+Math.round(n).toLocaleString('en-US');
+ function calcCarBuy(){
+   const sale=num('ccSalePlan'),svc=num('ccService'),tax=num('ccTax'),cost=svc+tax,target=num('ccTarget');
+   const max=Math.max(0,sale-cost-target),capital=max+cost,margin=sale-capital;
+   $c('ccInitialCost').value=fmt(cost);
+   $c('ccCapital').textContent=rup(capital);
+   $c('ccMaxBuy').textContent=rup(max);
+   $c('ccMargin').textContent=rup(margin);
+ }
+ ['ccSalePlan','ccService','ccTax','ccTarget'].forEach(id=>{
+   const el=$c(id);if(el){
+     el.addEventListener('input',()=>{formatMoneyInput(el);calcCarBuy();});
+     if(el.value)formatMoneyInput(el);
+   }
+ });
+ $c('ccApply')?.addEventListener('click',()=>{
+   calcCarBuy();
+   const sale=num('ccSalePlan'),cost=num('ccService')+num('ccTax'),target=num('ccTarget');
+   $c('cbPrice').value=fmt(Math.max(0,sale-cost-target));
+   $c('cbCost').value=fmt(cost);
+   $c('cbPlan').value=fmt(sale);
+ });
+ calcCarBuy();
+})();
+
+</script>
+</body></html>

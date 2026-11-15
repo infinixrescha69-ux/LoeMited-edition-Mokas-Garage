@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#101010">
+  <meta name="description" content="LoeMited edition Mokas Garage — aplikasi offline">
+  <link rel="manifest" href="./manifest.json">
+  <link rel="icon" href="./icon-192.png">
+  <title>LoeMited edition Mokas Garage</title>
+  <style>
+    :root { color-scheme: dark; --gold:#d6ad55; --bg:#101010; --panel:#1b1b1b; }
+    * { box-sizing:border-box; }
+    body { margin:0; min-height:100vh; font-family:system-ui, sans-serif; background:var(--bg); color:#f5f5f5; }
+    header { padding:24px 18px 16px; text-align:center; border-bottom:1px solid #333; }
+    .logo { width:92px; height:92px; border-radius:50%; margin:0 auto 12px; border:2px solid var(--gold); display:grid; place-items:center; font-weight:900; color:var(--gold); font-size:22px; }
+    h1 { font-size:21px; margin:8px 0; letter-spacing:.4px; }
+    .sub { color:#aaa; font-size:13px; }
+    main { max-width:720px; margin:auto; padding:18px; }
+    .card { background:var(--panel); border:1px solid #333; border-radius:16px; padding:18px; margin:14px 0; }
+    .card h2 { color:var(--gold); font-size:17px; margin:0 0 10px; }
+    button { background:var(--gold); color:#17120a; border:0; border-radius:10px; padding:12px 16px; font-weight:700; cursor:pointer; }
+    .muted { color:#aaa; font-size:13px; line-height:1.5; }
+    #status { color:#b7e4bd; font-size:13px; margin-top:10px; }
+    footer { text-align:center; color:#777; font-size:12px; padding:24px; }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="logo">LM<br>GARAGE</div>
+    <h1>LoeMited edition<br>Mokas Garage</h1>
+    <div class="sub">PWA • Mode Offline</div>
+  </header>
+  <main>
+    <section class="card">
+      <h2>Selamat datang</h2>
+      <p>Kerangka awal aplikasi Mokas Garage telah berjalan.</p>
+      <p class="muted">Ini adalah template PWA. Fitur bisnis, data kendaraan, transaksi, dan laporan dari HTML asli belum dimasukkan.</p>
+      <button id="installBtn" hidden>Instal aplikasi</button>
+      <div id="status">Memeriksa status offline…</div>
+    </section>
+    <section class="card">
+      <h2>Siap dikembangkan</h2>
+      <p class="muted">Unggah HTML Mokas Garage asli untuk mempertahankan dan memasukkan seluruh menu serta fungsi yang sudah ada ke versi PWA ini.</p>
+    </section>
+  </main>
+  <footer>LoeMited edition Mokas Garage</footer>
+  <script>
+    const statusEl = document.getElementById('status');
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', async () => {
+        try {
+          await navigator.serviceWorker.register('./sw.js');
+          statusEl.textContent = 'Service Worker aktif. Buka sekali saat online agar file tersimpan untuk offline.';
+        } catch (e) {
+          statusEl.textContent = 'Service Worker belum aktif: ' + e.message;
+        }
+      });
+    } else {
+      statusEl.textContent = 'Browser ini belum mendukung Service Worker.';
+    }
+    let deferredPrompt;
+    const installBtn = document.getElementById('installBtn');
+    window.addEventListener('beforeinstallprompt', (e) => {
+      e.preventDefault(); deferredPrompt = e; installBtn.hidden = false;
+    });
+    installBtn.addEventListener('click', async () => {
+      if (!deferredPrompt) return;
+      deferredPrompt.prompt();
+      await deferredPrompt.userChoice;
+      deferredPrompt = null;
+      installBtn.hidden = true;
+    });
+  </script>
+</body>
+</html>

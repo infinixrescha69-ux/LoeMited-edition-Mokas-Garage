@@ -1,16 +1,17 @@
 {
-  "id": "./",
-  "name": "LoeMited edition Mokas Garage",
-  "short_name": "Mokas Garage",
-  "description": "LoeMited edition Mokas Garage — aplikasi offline",
-  "start_url": "./index.html",
-  "scope": "./",
-  "display": "standalone",
-  "orientation": "portrait",
-  "background_color": "#101010",
-  "theme_color": "#101010",
-  "icons": [
-    {"src":"./icon-192.png","sizes":"192x192","type":"image/png"},
-    {"src":"./icon-512.png","sizes":"512x512","type":"image/png"}
+  "id":"./",
+  "name":"LoeMited edition Mokas Garage",
+  "short_name":"Mokas Garage",
+  "description":"Aplikasi showroom motor dan mobil offline",
+  "start_url":"./index.html",
+  "scope":"./",
+  "display":"standalone",
+  "display_override":["standalone","minimal-ui"],
+  "orientation":"any",
+  "background_color":"#101828",
+  "theme_color":"#101828",
+  "icons":[
+    {"src":"./icon-192.png","sizes":"192x192","type":"image/png","purpose":"any"},
+    {"src":"./icon-512.png","sizes":"512x512","type":"image/png","purpose":"any"}
   ]
 }
